@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.formatters.DateFormatter;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+
+			private static const API_KEY:String = 'API_KEY';
+			private static const API_URL:String = 'https://api.clickmeeting.com/v1/';
+			
+			/*
+			get conferences list
+			*/
+			
+			protected function conferencesButton_clickHandler(event:MouseEvent):void
+			{
+				var loader:URLLoader = new URLLoader();
+				configureListeners(loader);
+
+				var request:URLRequest = new URLRequest(API_URL + "conferences?api_key=" + API_KEY);
+				
+				request.method = URLRequestMethod.GET;
+
+				try {
+					loader.load(request);
+				} catch (error:Error) {
+					trace("Unable to load requested document.");
+				}
+			}
+			
+			/*
+			create conference
+			*/
+			
+			protected function createButton_clickHandler(event:MouseEvent):void
+			{
+				var loader:URLLoader = new URLLoader();
+				configureListeners(loader);
+				
+				var request:URLRequest = new URLRequest(API_URL + "conferences?api_key=" + API_KEY);
+				
+				var variables : URLVariables = new URLVariables(); 
+
+				var currentDate:Date = new Date();
+				currentDate.date += 2;
+
+				variables.name = "New api room 1";
+				variables.room_type = "meeting";
+				variables.permanent_room = 0;
+				variables.access_type = 1;
+				variables.lobby_description = "This is test for room created by API.";
+				variables.starts_at = dateFormatter.format(currentDate);
+				variables.duration = 1;
+				
+				request.method = URLRequestMethod.POST;
+				request.data = variables;
+
+				try {
+					loader.load(request);
+				} catch (error:Error) {
+					trace("Unable to load requested document.");
+				}
+			}
+			
+			private function configureListeners(dispatcher:IEventDispatcher):void {
+				dispatcher.addEventListener(Event.COMPLETE, completeHandler);
+				
+				/*
+				dispatcher.addEventListener(Event.OPEN, openHandler);
+				dispatcher.addEventListener(ProgressEvent.PROGRESS, progressHandler);
+				dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+				dispatcher.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+				dispatcher.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+				*/
+			}
+			
+			private function completeHandler(event:Event):void {
+				var loader:URLLoader = URLLoader(event.target);
+				trace("completeHandler: " + loader.data);
+				textArea.text = loader.data;
+
+				var responseObj:Object = JSON.parse(loader.data);
+				trace(responseObj);
+			}
+			
+			/*
+			private function openHandler(event:Event):void {
+			trace("openHandler: " + event);
+			}
+			
+			private function progressHandler(event:ProgressEvent):void {
+			trace("progressHandler loaded:" + event.bytesLoaded + " total: " + event.bytesTotal);
+			}
+			
+			private function securityErrorHandler(event:SecurityErrorEvent):void {
+			trace("securityErrorHandler: " + event);
+			}
+			
+			private function httpStatusHandler(event:HTTPStatusEvent):void {
+			trace("httpStatusHandler: " + event.status);
+			}
+			
+			private function ioErrorHandler(event:IOErrorEvent):void {
+			trace("ioErrorHandler: " + event);
+			}
+			*/
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:DateFormatter id="dateFormatter" formatString="YYYY-MM-DD HH:NN"/>
+	</fx:Declarations>
+
+	<s:Button id="conferencesButton" label="Conferences" click="conferencesButton_clickHandler(event)" x="150" y="20"/>
+	<s:Button id="createButton" label="Create" click="createButton_clickHandler(event)" x="250" y="20"/>
+
+	<s:TextArea id="textArea" x="20" y="50" width="460" height="290"/>
+	
+</s:WindowedApplication>
