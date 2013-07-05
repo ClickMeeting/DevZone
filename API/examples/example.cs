@@ -16,13 +16,13 @@ namespace ClickMeetingApi
         static String api_url = "https://api.clickmeeting.com/v1/";
 
         public static void Main(string[] args)
-		{
-			getConferences();
-			createConference();
+        {
+            getConferences();
+            createConference();
         }
 
-		public static void getConferences()
-		{
+        public static void getConferences()
+        {
             String url = api_url+"conferences?api_key="+api_key;
 
             // send headers and content in one request
@@ -37,26 +37,26 @@ namespace ClickMeetingApi
 
             try
             {
-				response_string = getStream((HttpWebResponse)request.GetResponse());
+                response_string = getStream((HttpWebResponse)request.GetResponse());
             }
-			catch(WebException e)
-			{
-				// check for communication and response errors
-				Console.WriteLine(e.Message);
-				response_string = getStream((HttpWebResponse)e.Response);
-			}
+            catch(WebException e)
+            {
+                // check for communication and response errors
+                Console.WriteLine(e.Message);
+                response_string = getStream((HttpWebResponse)e.Response);
+            }
             catch (Exception e)
             {
                 // check for communication and response errors
-				Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 Environment.Exit(0);
             }
 
             Console.Write(response_string);
-		}
+        }
 
-		public static void createConference()
-		{
+        public static void createConference()
+        {
             String url = api_url+"conferences";
 
             //POST
@@ -84,29 +84,29 @@ namespace ClickMeetingApi
             {
                 Stream request_stream = request.GetRequestStream();
                 request_stream.Write(request_bytes, 0, request_bytes.Length);
-				request_stream.Close();
+                request_stream.Close();
 
-				response_string = getStream((HttpWebResponse)request.GetResponse());
+                response_string = getStream((HttpWebResponse)request.GetResponse());
             }
-			catch(WebException e)
-			{
-				// check for communication and response errors
-				Console.WriteLine(e.Message);
-				response_string = getStream((HttpWebResponse)e.Response);
-			}
+            catch(WebException e)
+            {
+                // check for communication and response errors
+                Console.WriteLine(e.Message);
+                response_string = getStream((HttpWebResponse)e.Response);
+            }
             catch (Exception e)
             {
                 // check for communication and response errors
-				Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 Environment.Exit(0);
             }
 
             Console.Write(response_string);
-		}
+        }
 
-		public static String getStream(HttpWebResponse response)
-		{
-			String response_string = null;
+        public static String getStream(HttpWebResponse response)
+        {
+            String response_string = null;
             Stream response_stream = response.GetResponseStream();
 
             StreamReader reader = new StreamReader(response_stream);
@@ -116,7 +116,7 @@ namespace ClickMeetingApi
             response_stream.Close();
             response.Close();
 
-			return response_string;
-		}
+            return response_string;
+        }
     }
 }
