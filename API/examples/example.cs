@@ -1,5 +1,6 @@
 // Demonstrates how to add new conference
-// mcs example.cs & mono example.exe
+// mcs example.cs
+// mono example.exe
 
 using System;
 using System.IO;
