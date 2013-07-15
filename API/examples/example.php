@@ -1,6 +1,6 @@
 <?php
 /**
-* Demonstrates how to add new conference
+* Demonstrates how to get conferences list add new conference
 * restClient.php
 *
 * @author Paweł Brydziński <pbrydzinski@implix.com>
