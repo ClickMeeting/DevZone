@@ -129,7 +129,7 @@ try {
 
     $client = restClient::instance(array(
         'url'    => 'https://api.clickmeeting.com/v1/', // API URL
-        'key'    => '', // API KEY
+        'key'    => 'API KEY', // API KEY
         'format' => 'json'
     ));
 
