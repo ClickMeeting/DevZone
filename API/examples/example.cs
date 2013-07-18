@@ -1,5 +1,8 @@
 // Demonstrates how to get conferences list add new conference
-// mcs example.cs && mono example.exe
+// author Paweł Brydziński <pbrydzinski@implix.com>
+// http://implix.com
+// usage: mcs example.cs && mono example.exe
+
 
 using System;
 using System.IO;

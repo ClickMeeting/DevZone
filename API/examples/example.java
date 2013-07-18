@@ -1,5 +1,8 @@
 // Demonstrates how to get conferences list add new conference
-// javac example.java && java example
+// author Paweł Brydziński <pbrydzinski@implix.com>
+// http://implix.com
+// usage: javac example.java && java example
+
 
 import java.net.*;
 import java.io.*;
