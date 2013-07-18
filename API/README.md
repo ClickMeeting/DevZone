@@ -9,8 +9,12 @@ version 1.0, [changelog](#changelog)
 Check how to use API in following programming languages in our [examples](https://github.com/ClickMeeting/DevZone/tree/master/API/examples) section.
 
 <img src="http://upload.wikimedia.org/wikipedia/commons/7/72/Logo_C_Sharp.png" height="64" title="C#" alt="C#"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Java_logo_and_wordmark.svg/200px-Java_logo_and_wordmark.svg.png" height="64" title="Java" alt="Java"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" title="PHP" alt="PHP"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" title="Ruby" alt="Ruby"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/8/8f/Adobe_Flex.png" height="64" title="AdobeFlex" alt="Adobe Flex"/>
+
+
 
 ##SUPPORT
 
