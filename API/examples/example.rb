@@ -5,25 +5,24 @@
 # http://implix.com
 # usage: ruby example.rb
 
-
 require 'net/http'
 require 'json'
 
 class ClickMeetingApi
 
-    @@api_key = 'API_KEY'
-    @@api_url = 'https://api.clickmeeting.com/v1/'
+    API_KEY = 'API_KEY'
+    API_URL = 'https://api.clickmeeting.com/v1/'
 
     def getConferences
-        request({api_key: @@api_key})
+        request({api_key: API_KEY})
     end
 
     def addConference
-        request({api_key: @@api_key, name: 'APItest1', room_type: 'meeting', permanent_room: 1, access_type: 1}, 'POST')
+        request({api_key: API_KEY, name: 'APItest1', room_type: 'meeting', permanent_room: 1, access_type: 1}, 'POST')
     end
 
     def request(args={}, type='GET')
-        uri = URI.parse(@@api_url+'conferences')
+        uri = URI.parse(API_URL+'conferences')
         uri.query = URI.encode_www_form(args)
 
         http = Net::HTTP.new(uri.host, uri.port)
