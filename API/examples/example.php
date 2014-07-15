@@ -149,6 +149,7 @@ try {
     print_r($conference);
 
     // conference id
+    $conference = json_decode($conference);
     $conference_id = $conference->room->id;
 
     // get conferences
