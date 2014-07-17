@@ -63,6 +63,13 @@ class restClient
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
                 break;
+            case 'PUT':
+                if(empty($params[1]))
+                {
+                	curl_setopt($curl, CURLOPT_HTTPHEADER, array( 'Content-Length: 0' ) );
+                }
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+                break;
             default:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         }
