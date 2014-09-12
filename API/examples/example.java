@@ -24,8 +24,9 @@ public class example
     {
         try
         {
-            URL url = new URL(api_url+"conferences?api_key="+api_key);
+            URL url = new URL(api_url+"conferences");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty( "X-Api-Key", api_key);
 
             System.out.println(readOutput(connection));
         }
@@ -42,7 +43,7 @@ public class example
             Date date = new Date((new Date()).getTime()+(1000 * 60 * 60 * 24 *2));
 
             String data = "";
-            data += "&name=API room";
+            data += "&name=APItest";
             data += "&room_type=meeting";
             data += "&permanent_room=0";
             data += "&access_type=1";
@@ -50,13 +51,14 @@ public class example
             data += "&starts_at="+(new SimpleDateFormat("yyyy-MM-dd hh:mm")).format(date)+"";
             data += "&duration=1";
 
-            URL url = new URL(api_url+"conferences?api_key="+api_key);
+            URL url = new URL(api_url+"conferences");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setDoOutput(true);
             connection.setRequestMethod( "POST" );
             connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
             connection.setRequestProperty( "Content-Length", String.valueOf(data.length()));
+            connection.setRequestProperty( "X-Api-Key", api_key);
             OutputStream os = connection.getOutputStream();
             os.write( data.getBytes() );
 

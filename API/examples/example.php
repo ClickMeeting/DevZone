@@ -54,25 +54,27 @@ class restClient
         // do the actual connection
         $curl = curl_init();
         // set URL
-        curl_setopt($curl, CURLOPT_URL, $this->url.$params[0].'.'.$this->format.'?api_key='.$this->key);
+        curl_setopt($curl, CURLOPT_URL, $this->url.$params[0].'.'.$this->format);
+        $headers = array( 'X-Api-Key:' . $this->key );
         switch ($method) {
             case 'GET':
                 curl_setopt($curl, CURLOPT_HTTPGET, true);
                 break;
             case 'POST':
                 curl_setopt($curl, CURLOPT_POST, true);
-                curl_setopt($curl, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
+                $headers[] = 'Expect:';
                 break;
             case 'PUT':
                 if(empty($params[1]))
                 {
-                	curl_setopt($curl, CURLOPT_HTTPHEADER, array( 'Content-Length: 0' ) );
+                    $headers[] = 'Content-Length: 0';
                 }
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
                 break;
             default:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         }
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         if(!empty($params[1]))
         {
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params[1]));
@@ -142,7 +144,7 @@ try {
 
     // new conference data
     $data = array(
-        'name' => 'New api room 1',
+        'name' => 'APItest',
         'room_type' => 'meeting',
         'permanent_room' => 0,
         'access_type' => 1,

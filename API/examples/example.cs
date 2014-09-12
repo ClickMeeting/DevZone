@@ -15,18 +15,18 @@ namespace ClickMeetingApi
 {
     class Example
     {
-        static String api_key = "API_KEY";
+        static String api_key = "API KEY";
         static String api_url = "https://api.clickmeeting.com/v1/";
 
         public static void Main(string[] args)
         {
-            getConferences();
+            // getConferences();
             createConference();
         }
 
         public static void getConferences()
         {
-            String url = api_url+"conferences?api_key="+api_key;
+            String url = api_url+"conferences";
 
             // send headers and content in one request
             System.Net.ServicePointManager.Expect100Continue = false;
@@ -35,6 +35,7 @@ namespace ClickMeetingApi
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "application/x-www-form-urlencoded";
+            request.Headers["X-Api-Key"] = api_key;
 
             String response_string = null;
 
@@ -64,8 +65,7 @@ namespace ClickMeetingApi
 
             //POST
             String _request = "";
-            _request = "api_key="+api_key;
-            _request += "&name=APItest1";
+            _request += "&name=APItest";
             _request += "&room_type=meeting";
             _request += "&permanent_room=1";
             _request += "&access_type=1";
@@ -79,6 +79,7 @@ namespace ClickMeetingApi
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
+            request.Headers["X-Api-Key"] = api_key;
             request.ContentLength = request_bytes.Length;
 
             String response_string = null;
