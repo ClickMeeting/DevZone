@@ -353,7 +353,7 @@ class restClient
      * Download file
      * @param int $file_id
      */
-    public function getFileLibraryContent($file_id)
+    public function fileLibraryContent($file_id)
     {
     	return $this->getResponse('GET', 'file-library/'.$file_id.'/download', null, false);
     }
