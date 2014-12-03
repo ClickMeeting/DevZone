@@ -6,7 +6,7 @@ try {
 
     // new conference data
     $params = array(
-  		'name' => 'test_room' . time(), // room name
+  		'name' => 'test_room', // room name
   		'room_type' => 'meeting', // room type
   		'permanent_room' => 0, // permanent or time scheduled room
   		'access_type' => 3, // room access type, 1 – open to all
@@ -88,7 +88,7 @@ try {
     		array('email' => 'example@domain.com'),
    		),
     );
-    print_r($client->sendConferenceEmailInvitations($conference_id, 'en', $params));
+    print_r($client->sendConferenceEmailInvitations($conference_id, 'us', $params));
     
     print_r($client->deleteConference($conference_id));
 }

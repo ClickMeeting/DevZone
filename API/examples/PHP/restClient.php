@@ -328,7 +328,7 @@ class restClient
      */
     public function conferenceFileLibrary($room_id)
     {
-    	return $this->getResponse('GET', 'file-library/conferences'.$room_id);
+    	return $this->getResponse('GET', 'file-library/conferences/'.$room_id);
     }
     
     /**
