@@ -15,7 +15,7 @@ Please contact us using [this form](http://www.clickmeeting.com/contact_us.html)
 
 <a href="http://opensource.org/"><img src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="OpenSource"/></a>
 
-Copyright 2013 Implix Sp. z o.o.
+Copyright 2015 GetResponse Sp. z o.o.
 
 Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
