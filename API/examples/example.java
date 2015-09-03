@@ -1,6 +1,6 @@
 // Demonstrates how to get conferences list add new conference
 // author Paweł Brydziński <pbrydzinski@implix.com>
-// http://implix.com
+// http://www.clickmeeting.com/
 // usage: javac example.java && java example
 
 
