@@ -13,7 +13,7 @@ Check how to use API in following programming languages in our [examples](https:
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" title="PHP" alt="PHP"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" title="Ruby" alt="Ruby"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" title="Python" alt="Python"/>
-<img src=http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Adobe_Flex_4_icon.png/160px-Adobe_Flex_4_icon.png" height="64" title="AdobeFlex" alt="Adobe Flex"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Adobe_Flex_4_icon.png/160px-Adobe_Flex_4_icon.png" height="64" title="AdobeFlex" alt="Adobe Flex"/>
 
 
 
