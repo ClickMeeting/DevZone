@@ -1,6 +1,6 @@
 // Demonstrates how to get conferences list add new conference
 // author Paweł Brydziński <pbrydzinski@implix.com>
-// http://implix.com
+// http://www.clickmeeting.com/
 // usage: mcs example.cs && mono example.exe
 
 
