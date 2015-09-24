@@ -55,7 +55,7 @@ try {
         'role' => 'listener',
         ))
     );
-    
+
     // Tokens
     print_r($client->generateConferenceTokens($room_id, array('how_many' => 2)));
     
@@ -107,9 +107,9 @@ try {
     
     print_r($client->fileLibraryFile($file_id));
     
-       print_r($client->fileLibraryContent($file_id));
+    print_r($client->fileLibraryContent($file_id));
        
-       print_r($client->deleteFileLibraryFile($file_id));
+    print_r($client->deleteFileLibraryFile($file_id));
        
     // Recordings
     print_r($client->conferenceRecordings($room_id));
