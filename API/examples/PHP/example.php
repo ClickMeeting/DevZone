@@ -1,21 +1,37 @@
 <?php
 
 try {
-	include_once './ClickMeetingRestClient.php';
+    include_once './ClickMeetingRestClient.php';
     $client = new ClickMeetingRestClient(array('api_key' => 'MY_API_KEY'));
 
     // Conferences
     $params = array(
-  		'name' => 'test_room',
-  		'room_type' => 'meeting',
-  		'permanent_room' => 0,
-  		'access_type' => 3,
-  		'registration' => array('enabled' => true),
-	);
+        'lobby_enabled' => true, 
+        'lobby_description' => 'My meeting',
+        'name' => 'test_room',
+        'room_type' => 'meeting',
+        'permanent_room' => 0,
+        'access_type' => 3,
+        'registration' => array(
+            'template'=>1 , 
+            'enabled' => true
+        ),
+       'settings' => array(
+            'show_on_personal_page' => 1,
+            'thank_you_emails_enabled' => 1, 
+            'connection_tester_enabled' =>1,
+            'phonegateway_enabled' =>1, 
+            'recorder_autostart_enabled' => 1, 
+            'room_invite_button_enabled' =>1,
+            'social_media_sharing_enabled' =>1, 
+            'connection_status_enabled' =>1,
+            'thank_you_page_url' => 'http://example.com/thank_you.html',
+        ),
+    );
     
     $conference = $client->addConference($params);
     $room_id = $conference->room->id;
-    
+
     print_r($conference);
 
     print_r($client->conference($room_id));
@@ -24,6 +40,8 @@ try {
 
     print_r($client->editConference($room_id, array('name' => 'new_test_room')));
 
+    print_r($client->conferenceSkins());
+
     print_r($client->conferenceAutologinHash($room_id, array(
         'email' => 'email@domain.com',
         'nickname' => 'my_nickname',
@@ -31,8 +49,11 @@ try {
     );
     
     print_r($client->sendConferenceEmailInvitations($room_id, 'us', array(
-    	'attendees' => array(
-    		array('email' => 'example@domain.com'))))
+        'attendees' => array(
+            array('email' => 'dostapiuk+1111@implix.com')),
+        'template' => 'advanced', // basic / advanced
+        'role' => 'listener',
+        ))
     );
     
     // Tokens
@@ -50,24 +71,34 @@ try {
     print_r($client->conferenceSessionAttendees($existing_room_id, $existing_session_id));
     
     print_r($client->generateConferenceSessionPDF($existing_room_id, $existing_session_id, 'en'));
-    
+
     // Timezones
     print_r($client->timeZoneList());
     
-    print_r($client->countryTimeZoneList('en'));
+    print_r($client->countryTimeZoneList('us'));
+
+    print_r($client->phoneGatewayList());
     
     // Registrations
-    print_r($client->addConferenceRegistration($room_id, array('registration' => array(
-    	1 => 'John',
-    	2 => 'Dee',
-    	3 => 'example@domain.com')))
+    print_r($client->addConferenceRegistration($room_id, 
+        array(
+            'registration' => array(
+               1 => 'John',
+               2 => 'Dee',
+               3 => 'example@domain.com'),
+            'confirmation_email' => array(
+                'enabled' => 1,
+                'lang' => 'en',
+            ),
+        ))
     );
     
     print_r($client->conferenceRegistrations($room_id, 'all'));
-    
+
     // File library
     $file = $client->addFileLibraryFile('/my/file.png');
     print_r($file);
+
     $file_id = $file->id;
     
     print_r($client->fileLibrary());
@@ -76,11 +107,11 @@ try {
     
     print_r($client->fileLibraryFile($file_id));
     
-   	print_r($client->fileLibraryContent($file_id));
-   	
-   	print_r($client->deleteFileLibraryFile($file_id));
-   	
-	// Recordings
+       print_r($client->fileLibraryContent($file_id));
+       
+       print_r($client->deleteFileLibraryFile($file_id));
+       
+    // Recordings
     print_r($client->conferenceRecordings($room_id));
     
     print_r($client->deleteConferenceRecordings($room_id));
