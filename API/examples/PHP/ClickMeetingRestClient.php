@@ -88,7 +88,6 @@ class ClickMeetingRestClient
         
         // set URL
         curl_setopt($curl, CURLOPT_URL, $this->url.$path.'.'.(isset($this->format) ? $this->format : 'json'));
-        
         // set api key
         $headers = array( 'X-Api-Key:' . $this->api_key);
         
@@ -217,6 +216,30 @@ class ClickMeetingRestClient
     }
     
     /**
+     * Send invitation mail
+     * @param int $room_id
+     * @param string $lang
+     * @param array $params
+     * @return Ambigous <string, multitype:, mixed>
+     */
+    public function sendConferenceEmailInvitations($room_id, $lang = 'en', $params)
+    {
+        return $this->sendRequest('POST', 'conferences/'.$room_id.'/invitation/email/'.$lang, $params);
+    }
+    
+    /**
+     * Conference skins
+     * @param int $room_id
+     * @param string $lang
+     * @param array $params
+     * @return Ambigous <string, multitype:, mixed>
+     */
+    public function conferenceSkins()
+    {
+        return $this->sendRequest('GET', 'conferences/skins');
+    }
+
+    /**
      * Conference generate tokens
      * @param int $room_id
      * @param array $params
@@ -263,7 +286,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions/'.$session_id.'/attendees');
     }
-    
+
     /**
      * Generate pdf report
      * @param int $room_id
@@ -290,6 +313,14 @@ class ClickMeetingRestClient
     public function countryTimeZoneList($country)
     {
         return $this->sendRequest('GET', 'time_zone_list/'.$country);
+    }
+
+    /**
+     * Get phone gateways
+     */
+    public function phoneGatewayList()
+    {
+        return $this->sendRequest('GET', 'phone_gateways');
     }
     
     /**
@@ -419,17 +450,5 @@ class ClickMeetingRestClient
     public function conferenceSessionChats($session_id)
     {
         return $this->sendRequest('GET', 'chats/'.$session_id, null, false);
-    }
-    
-    /**
-     * Send invitation mail
-     * @param int $room_id
-     * @param string $lang
-     * @param array $params
-     * @return Ambigous <string, multitype:, mixed>
-     */
-    public function sendConferenceEmailInvitations($room_id, $lang = 'en', $params)
-    {
-        return $this->sendRequest('POST', 'conferences/'.$room_id.'/invitation/email/'.$lang, $params);
     }
 }
