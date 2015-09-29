@@ -142,7 +142,7 @@ class ClickMeetingRestClient:
             elif(type(params).__name__ == 'list'):
                 for (index, value) in enumerate(params):
                     if(base_key):
-                        results += build_query_item(value, "%s" % (base_key))
+                        results += build_query_item(value, "%s[]" % (base_key))
                     else:
                         results += build_query_item(value)
             else:

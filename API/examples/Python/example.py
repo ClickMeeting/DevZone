@@ -8,9 +8,24 @@ try:
         'room_type': 'meeting', 
         'permanent_room': 0, 
         'access_type': 3, 
-        'registration' : {'enabled': 1}})
-        
-    print room
+        'lobby_enabled': 1,
+        'registration' : {
+            'enabled': 1
+        },
+       'settings': {
+            'show_on_personal_page': 1,
+            'thank_you_emails_enabled': 1,
+            'connection_tester_enabled': 1,
+            'phonegateway_enabled': 1,
+            'recorder_autostart_enabled': 1,
+            'room_invite_button_enabled': 1,
+            'social_media_sharing_enabled': 1,
+            'connection_status_enabled': 1,
+            'thank_you_page_url': 'http://example.com/thank_you.html'
+        }
+    })
+    
+    print room    
     room_id = room['room']['id']
     
     print client.conference(room_id)
@@ -45,13 +60,19 @@ try:
     print client.timeZoneList()
         
     print client.countryTimeZoneList('us')
-    
+   
+    print client.phoneGatewayList()
+ 
     params = {
         "registration" : {
             1 : 'John',
             2 : 'Dee',
             3 : 'example@domain.com'
-        }
+        },
+       "confirmation_email" : {
+            'enabled' : 1,
+            'lang' : 'en',
+       }
     }
         
     print client.addConferenceRegistration(room_id, params)
@@ -88,7 +109,9 @@ try:
     params = {
         'attendees' : [
             {'email' : 'example@domain.com'}
-        ]
+        ],
+        'template' : 'advanced', # basic / advanced
+        'role' : 'listener',
     }
     
     print client.sendConferenceEmailInvitations(room_id, 'us', params)
