@@ -62,6 +62,8 @@ try:
     print client.countryTimeZoneList('us')
    
     print client.phoneGatewayList()
+
+    print client.conferenceSkins()
  
     params = {
         "registration" : {
