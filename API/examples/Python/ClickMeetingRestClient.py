@@ -82,7 +82,13 @@ class ClickMeetingRestClient:
         
     def countryTimeZoneList(self, country):
         return self.sendRequest('GET', 'time_zone_list/'+country)
-        
+    
+    def phoneGatewayList(self):
+        return self.sendRequest('GET', 'phone_gateways')
+  
+    def conferenceSkins(self):
+        return self.sendRequest('GET', 'conferences/skins')
+  
     def addConferenceRegistration(self, room_id, params):
         return self.sendRequest('POST', 'conferences/'+'%s' % room_id+'/registration', params)
         
