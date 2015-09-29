@@ -85,10 +85,17 @@ module ClickMeeting
     
         def hash_to_query(hash, prefix = nil)
             hash.collect do |key, value|
-                final_key = prefix ? "#{prefix}[#{key}]" : key
                 if value.is_a?(Hash)
+                    final_key = prefix ? "#{prefix}[#{key}]" : key
                     hash_to_query(value, final_key)
+                elsif value.is_a?(Array)
+                    final_key = prefix ? "#{prefix}[#{key}][]" : "#{key}[]"
+                    hash_to_query(value, final_key)
+                elsif key.is_a?(Hash)
+                    final_key = prefix
+                    hash_to_query(key, final_key)
                 else
+                    final_key = prefix ? "#{prefix}[#{key}]" : key
                     url_encode(final_key) + "=" + url_encode(value)
                 end
             end.sort * '&'
@@ -161,6 +168,16 @@ module ClickMeeting
         def countryTimeZoneList(country)
         
             sendRequest('GET', 'time_zone_list/'+country)
+        end
+
+        def phoneGatewayList()
+
+            sendRequest('GET', 'phone_gateways')
+        end
+
+        def conferenceSkins()
+
+            sendRequest('GET', 'conferences/skins')
         end
     
         def addConferenceRegistration(room_id, params)
