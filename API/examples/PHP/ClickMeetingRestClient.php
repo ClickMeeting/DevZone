@@ -10,13 +10,13 @@ class ClickMeetingRestClient
      * @var string
      */
     protected $url = 'https://api.clickmeeting.com/v1/';
-    
+
     /**
      * API key
      * @var string
      */
     protected $api_key = null;
-    
+
     /**
      * Format
      * @var string
@@ -31,7 +31,7 @@ class ClickMeetingRestClient
         CURLOPT_CONNECTTIMEOUT => 8,
         CURLOPT_TIMEOUT => 8
     );
-    
+
     /**
      * Error codes
      * @var array
@@ -46,13 +46,13 @@ class ClickMeetingRestClient
         500 => '500 Internal Server Error',
         501 => '501 Not Implemented',
     );
-    
+
     /**
      * Allowed formats
      * @var unknown
      */
     protected $formats = array('json', 'xml', 'js', 'printr');
-    
+
     /**
      * Constructor
      * @param array $params
@@ -64,13 +64,13 @@ class ClickMeetingRestClient
         {
             throw new Exception('The curl extension must be loaded for using this class!');
         }
-        
+
         $this->url = isset($params['url']) ? $params['url'] : $this->url;
         $this->api_key = isset($params['api_key']) ? $params['api_key'] : $this->api_key;
         $this->format = isset($params['format']) && in_array(strtolower($params['format']), $this->formats) ? strtolower($params['format']) : $this->format;
     }
 
-    
+
     /**
      * Get response
      * @param string $method
@@ -85,18 +85,18 @@ class ClickMeetingRestClient
     {
         // do the actual connection
         $curl = curl_init();
-        
+
         // set URL
         curl_setopt($curl, CURLOPT_URL, $this->url.$path.'.'.(isset($this->format) ? $this->format : 'json'));
         // set api key
         $headers = array( 'X-Api-Key:' . $this->api_key);
-        
+
         // is uplaoded file
-        if (true == $is_upload_file) 
+        if (true == $is_upload_file)
         {
             $headers[] = 'Content-type: multipart/form-data';
         }
-        
+
         switch ($method) {
             case 'GET':
                 curl_setopt($curl, CURLOPT_HTTPGET, true);
@@ -115,9 +115,9 @@ class ClickMeetingRestClient
             default:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         }
-        
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        
+
         // add params
         if (!empty($params))
         {
@@ -127,35 +127,35 @@ class ClickMeetingRestClient
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt_array($curl, $this->curl_options);
-        
+
         // send the request
         $response = curl_exec($curl);
-        
+
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        
+
         if (isset($this->http_errors[$http_code]))
         {
-            throw new Exception($this->http_errors[$http_code]);
+            throw new Exception($response, $http_code);
         }
         elseif (!in_array($http_code, array(200,201)))
         {
             throw new Exception('Response status code: ' . $http_code);
         }
-        
+
         // check for curl error
         if (0 < curl_errno($curl))
         {
             throw new Exception('Unable to connect to '.$this->url . ' Error: ' . curl_error($curl));
         }
-        
+
         // close the connection
         curl_close($curl);
-        
+
         // check return format
         if (!isset($this->format) && true == $format_response)
         {
             $response = json_decode($response);
-        }        
+        }
         return $response;
     }
 
@@ -214,7 +214,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('POST', 'conferences/'.$room_id.'/room/autologin_hash', $params);
     }
-    
+
     /**
      * Send invitation mail
      * @param int $room_id
@@ -226,7 +226,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('POST', 'conferences/'.$room_id.'/invitation/email/'.$lang, $params);
     }
-    
+
     /**
      * Conference skins
      * @param int $room_id
@@ -248,7 +248,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('POST', 'conferences/'.$room_id.'/tokens', $params);
     }
-    
+
     /**
      * Get coference tokens
      * @param int $room_id
@@ -257,7 +257,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/tokens');
     }
-    
+
     /**
      * Get conference sessions
      * @param unknown $room_id
@@ -266,7 +266,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions');
     }
-    
+
     /**
      * Get conference session
      * @param int $room_id
@@ -276,7 +276,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions/'.$session_id);
     }
-    
+
     /**
      * Get conference session attendees
      * @param int $room_id
@@ -297,7 +297,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions/'.$session_id.'/generate-pdf/'.$lang);
     }
-    
+
     /**
      * Get timezone list
      */
@@ -305,7 +305,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'time_zone_list');
     }
-    
+
     /**
      * Get timezone by country
      * @param string $country
@@ -322,7 +322,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'phone_gateways');
     }
-    
+
     /**
      * Add conference registration
      * @param int $room_id
@@ -332,7 +332,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('POST', 'conferences/'.$room_id.'/registration', $params);
     }
-    
+
     /**
      * Get conference registrants
      * @param int $room_id
@@ -342,7 +342,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/registrations/'.$status);
     }
-    
+
     /**
      * Get conference session registants
      * @param int $room_id
@@ -353,7 +353,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions'.$session_id.'/registrations/'.$status);
     }
-    
+
     /**
      * Get files from library
      */
@@ -361,7 +361,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'file-library');
     }
-    
+
     /**
      * Get coference file library
      * @param int $room_id
@@ -370,7 +370,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'file-library/conferences/'.$room_id);
     }
-    
+
     /**
      * Get file details
      * @param int $file_id
@@ -379,7 +379,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'file-library/'.$file_id);
     }
-    
+
     /**
      * Add file to library
      * @param string $file_path
@@ -388,7 +388,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('POST', 'file-library', array('uploaded' => '@'.$file_path), true, true);
     }
-    
+
     /**
      * Download file
      * @param int $file_id
@@ -397,7 +397,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'file-library/'.$file_id.'/download', null, false);
     }
-    
+
     /**
      * Delete file
      * @param int $file_id
@@ -406,7 +406,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('DELETE', 'file-library/'.$file_id);
     }
-    
+
     /**
      * Get conference recordings
      * @param int $room_id
@@ -415,7 +415,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/recordings');
     }
-    
+
     /**
      * Delete conference recordings
      * @param int $room_id
@@ -424,7 +424,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('DELETE', 'conferences/'.$room_id.'/recordings');
     }
-    
+
     /**
      * Delete conference recording
      * @param int $room_id
@@ -434,7 +434,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('DELETE', 'conferences/'.$room_id.'/recordings/'.$recording_id);
     }
-    
+
     /**
      * Get chats
      */
@@ -442,7 +442,7 @@ class ClickMeetingRestClient
     {
         return $this->sendRequest('GET', 'chats');
     }
-    
+
     /**
      * Get chat record
      * @param int $session_id
