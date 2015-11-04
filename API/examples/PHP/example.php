@@ -45,12 +45,13 @@ try {
     print_r($client->conferenceAutologinHash($room_id, array(
         'email' => 'email@domain.com',
         'nickname' => 'my_nickname',
-        'role' => 'listener'))
-    );
+        'role' => 'listener'
+    )));
 
     print_r($client->sendConferenceEmailInvitations($room_id, 'us', array(
         'attendees' => array(
-            array('email' => 'dostapiuk+1111@implix.com')),
+            array('email' => 'example@domain.com')
+        ),
         'template' => 'advanced', // basic | advanced
         'role' => 'listener',
     )));
@@ -83,7 +84,8 @@ try {
         'registration' => array(
            1 => 'John',
            2 => 'Dee',
-           3 => 'example@domain.com'),
+           3 => 'example@domain.com'
+        ),
         'confirmation_email' => array(
             'enabled' => 1,
             'lang' => 'en',
