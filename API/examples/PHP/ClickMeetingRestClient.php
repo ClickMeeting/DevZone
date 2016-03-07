@@ -162,10 +162,11 @@ class ClickMeetingRestClient
     /**
      * Get conferences
      * @param string $status
+     * @param int $page
      */
-    public function conferences($status = 'active')
+    public function conferences($status = 'active', $page = 1)
     {
-        return $this->sendRequest('GET', 'conferences/'.$status);
+        return $this->sendRequest('GET', 'conferences/'.$status . '?page=' . $page);
     }
 
     /**
@@ -296,6 +297,15 @@ class ClickMeetingRestClient
     public function generateConferenceSessionPDF($room_id, $session_id, $lang = 'en')
     {
         return $this->sendRequest('GET', 'conferences/'.$room_id.'/sessions/'.$session_id.'/generate-pdf/'.$lang);
+    }
+
+    /**
+     * Add new contact
+     * @param array $params
+     */
+    public function addContact($params)
+    {
+        return $this->sendRequest('POST', 'contacts', $params);
     }
 
     /**

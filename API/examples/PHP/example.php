@@ -42,6 +42,14 @@ try {
 
     print_r($client->conferenceSkins());
 
+    print_r($client->addContact([
+        'email' => 'example@domain.com',
+        'firstname' => 'John',
+        'lastname' => 'Dee',
+        'phone' => '+1234567890',
+        'company' => 'My company',
+        'country' => 'US']));
+
     print_r($client->conferenceAutologinHash($room_id, array(
         'email' => 'email@domain.com',
         'nickname' => 'my_nickname',
