@@ -32,7 +32,8 @@ class ClickMeetingRestClient:
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
             
         response = requests.request(method=method.upper(), url=url, data=data, files=files, headers=headers, verify=True)
-        response.raise_for_status()
+        if response.status_code != 200 and response.status_code != 201:
+            raise Exception(response.content)
         
         if self.format == None and format_response == True:
             response = response.json()
@@ -41,8 +42,8 @@ class ClickMeetingRestClient:
         
         return response
         
-    def conferences(self):
-        return self.sendRequest('GET', 'conferences')
+    def conferences(self, status = 'active', page = 1):
+        return self.sendRequest('GET', 'conferences/'+'%s' % status + '?page=' + '%d' % page)
         
     def conference(self, room_id):
         return self.sendRequest('GET', 'conferences/'+'%s' % room_id)
@@ -76,6 +77,9 @@ class ClickMeetingRestClient:
         
     def generateConferenceSessionPDF(self, room_id, session_id, lang = 'en'):
         return self.sendRequest('GET', 'conferences/'+'%s' % room_id+'/sessions/'+'%s' % session_id+'/generate-pdf/'+lang)
+
+    def addContact(self, params):
+        return self.sendRequest('POST', 'contacts', params)
         
     def timeZoneList(self):
         return self.sendRequest('GET', 'time_zone_list')

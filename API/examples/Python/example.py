@@ -57,6 +57,17 @@ try:
     
     print client.generateConferenceSessionPDF(existing_room_id, existing_session_id, 'en')
     
+    params = {
+        'email' : 'example@domain.com',
+        'firstname' : 'John',
+        'lastname' : 'Dee',
+        'company' : 'My company', # basic / advanced
+        'country' : 'US',
+        'phone' : '+1234567890',
+    }
+    
+    print client.addContact(params)
+
     print client.timeZoneList()
         
     print client.countryTimeZoneList('us')
