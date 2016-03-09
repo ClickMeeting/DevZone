@@ -58,17 +58,15 @@ module ClickMeeting
             http.verify_mode = OpenSSL::SSL::VERIFY_NONE
             
             response = http.request(request)
-            
+
             raise ClientError.new("400 Bad Request") if response.code.to_i == 400
             raise ClientError.new("401 Unauthorized") if response.code.to_i == 401
-            raise ClientError.new("403 Forbidden") if response.code.to_i == 403
             raise ClientError.new("404 Not Found") if response.code.to_i == 404
-            raise ClientError.new("422 Unprocessable Entity") if response.code.to_i == 422
             raise ClientError.new("500 Internal Sever Error") if response.code.to_i == 500
             raise ClientError.new("501 Not implemented") if response.code.to_i == 501
             
             unless response.code.to_i == 200 or response.code.to_i == 201
-                raise ClientError.new("Response status code: #{response.code}")
+                raise ClientError.new(response.body)
             end
             
             if !@format && format_response
@@ -101,8 +99,8 @@ module ClickMeeting
             end.sort * '&'
         end
         
-        def conferences()
-            sendRequest('GET', 'conferences')
+        def conferences(status = 'active', page = 1)
+            sendRequest('GET', 'conferences/' + status + '?page=' + page)
         end
     
         def conference(room_id)
@@ -160,6 +158,11 @@ module ClickMeeting
             sendRequest('GET', 'conferences/'+room_id.to_s+'/sessions/'+session_id.to_s+'/generate-pdf/'+lang)
         end
         
+        def addContact(params)
+        
+            sendRequest('POST', 'contacts', params)
+        end
+
         def timeZoneList()
         
             sendRequest('GET', 'time_zone_list')

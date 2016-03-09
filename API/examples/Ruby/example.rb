@@ -61,6 +61,16 @@ begin
     
     puts client.generateConferenceSessionPDF(existing_room_id, existing_session_id, 'en')
     
+    params = {
+        "email" => "example@domain.com",
+        "firstname" => "John",
+        "lastname" => "Dee",
+        "company" => "My company",
+        "phone" => "+123456789",
+    }
+        
+    puts client.addContact(params)
+
     puts client.timeZoneList()
         
     puts client.countryTimeZoneList('us')
