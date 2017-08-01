@@ -100,7 +100,7 @@ module ClickMeeting
         end
         
         def conferences(status = 'active', page = 1)
-            sendRequest('GET', 'conferences/' + status + '?page=' + page)
+            sendRequest('GET', 'conferences/' + status + '?page=' + page.to_s)
         end
     
         def conference(room_id)
