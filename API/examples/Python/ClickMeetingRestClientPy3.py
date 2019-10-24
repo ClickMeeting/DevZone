@@ -1,6 +1,6 @@
  # ClickMeeting REST client
 
-import urllib
+import urllib, urllib.parse
 import json
 import requests
 import types
@@ -8,13 +8,13 @@ import types
 class ClickMeetingRestClient:
 
     def __init__(self, params):
-        self.api_key = params['api_key'] if params.has_key('api_key') else None
+        self.api_key = params['api_key'] if 'api_key' in params else None
         
         formats = ['json', 'xml', 'js', 'printr']
         
-        self.url = params['url'] if params.has_key('url') else 'https://api.clickmeeting.com/v1/'
+        self.url = params['url'] if 'url' in params else 'https://api.clickmeeting.com/v1/'
         
-        self.format = params['format'].lower() if params.has_key('format') and params['format'].lower() in formats else None
+        self.format = params['format'].lower() if 'format' in params and params['format'].lower() in formats else None
         
     def sendRequest(self, method, path, params = None, format_response = True, is_upload_file = False):
         
@@ -145,7 +145,7 @@ class ClickMeetingRestClient:
             if(type(params).__name__ == 'dict'):
                 for key, value in params.items():
                     if(base_key):
-                        new_base = urllib.quote(unicode("%s[%s]" % (base_key, key)))
+                        new_base = urllib.parse.quote(str("%s[%s]" % (base_key, key)))
                         results += build_query_item(value, new_base)
                     else:
                         results += build_query_item(value, key)
@@ -156,7 +156,7 @@ class ClickMeetingRestClient:
                     else:
                         results += build_query_item(value)
             else:
-                quoted_item = urllib.quote(unicode(params))
+                quoted_item = urllib.parse.quote(str(params))
                 if(base_key):
                     results.append("%s=%s" % (base_key, quoted_item))
                 else:
